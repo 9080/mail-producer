@@ -1,4 +1,4 @@
-package com.helon.mailproducer;
+package com.helon.mail.producer;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.junit.AfterClass;

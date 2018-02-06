@@ -1,4 +1,4 @@
-package com.helon.mailproducer;
+package com.helon.mail.producer;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;

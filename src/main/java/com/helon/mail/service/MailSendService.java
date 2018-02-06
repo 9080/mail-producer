@@ -1,5 +1,6 @@
 package com.helon.mail.service;
 
+import com.helon.mail.config.database.ReadOnlyConnection;
 import com.helon.mail.entity.MailSend;
 import com.helon.mail.enumeration.MailStatus;
 import com.helon.mail.enumeration.RedisPriorityQueue;
@@ -14,6 +15,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: Helon
@@ -48,6 +51,14 @@ public class MailSendService {
         }
     }
 
+    @ReadOnlyConnection
+    public List<MailSend> queryDraftList() {
+        List<MailSend> list = new ArrayList<>();
+        list.addAll(mailSend1Mapper.queryDraftList());
+        list.addAll(mailSend2Mapper.queryDraftList());
+        return list;
+    }
+
     /**
      * @Author: Helon
      * @Description: 将发送信息存入到redis队列中
@@ -56,6 +67,11 @@ public class MailSendService {
      * @Modified By:
      */
     public void sendRedis(MailSend mailSend) {
+        if(mailSend.getSendId().hashCode() % 2 == 0){
+            mailSend = mailSend1Mapper.selectByPrimaryKey(mailSend.getSendId());
+        }else{
+            mailSend = mailSend2Mapper.selectByPrimaryKey(mailSend.getSendId());
+        }
        ListOperations<String, String> listOperations = redisTemplate.opsForList();
        Long priority = mailSend.getSendPriority();
        Long ret = 0L;

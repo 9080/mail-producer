@@ -61,4 +61,7 @@
     </set>
     where SEND_ID = #{sendId,jdbcType=VARCHAR}
   </update>
+  <select id="queryDraftList" resultType="BaseResultMap">
+    SELECT * FROM mail_send2 WHERE SEND_STATUS='0'
+  </select>
 </mapper>

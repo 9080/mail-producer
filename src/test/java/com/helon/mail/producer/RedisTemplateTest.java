@@ -1,4 +1,4 @@
-package com.helon.mailproducer;
+package com.helon.mail.producer;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

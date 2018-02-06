@@ -1,4 +1,4 @@
-package com.helon.mailproducer;
+package com.helon.mail.producer;
 
 import com.github.pagehelper.PageHelper;
 import com.helon.mail.entity.MstDict;

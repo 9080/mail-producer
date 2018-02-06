@@ -1,4 +1,4 @@
-package com.helon.mailproducer;
+package com.helon.mail.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
