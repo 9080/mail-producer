@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.helon.mail.mapper.MailSend2Mapper" >
-  <resultMap id="BaseResultMap" type="com.helon.mail.entity.MailSend" >
+  <resultMap id="baseResultMap" type="com.helon.mail.entity.MailSend" >
     <id column="SEND_ID" property="sendId" jdbcType="VARCHAR" />
     <result column="SEND_TO" property="sendTo" jdbcType="VARCHAR" />
     <result column="SEND_USER_ID" property="sendUserId" jdbcType="VARCHAR" />
@@ -61,7 +61,11 @@
     </set>
     where SEND_ID = #{sendId,jdbcType=VARCHAR}
   </update>
-  <select id="queryDraftList" resultType="BaseResultMap">
+  <select id="queryDraftList" resultMap="baseResultMap">
     SELECT * FROM mail_send2 WHERE SEND_STATUS='0'
+  </select>
+
+  <select id="selectById" resultMap="baseResultMap">
+    SELECT * FROM mail_send2 WHERE SEND_ID=#{sendId}
   </select>
 </mapper>

@@ -68,19 +68,19 @@ public class MailSendService {
      */
     public void sendRedis(MailSend mailSend) {
         if(mailSend.getSendId().hashCode() % 2 == 0){
-            mailSend = mailSend1Mapper.selectByPrimaryKey(mailSend.getSendId());
+            mailSend = mailSend1Mapper.selectById(mailSend.getSendId());
         }else{
-            mailSend = mailSend2Mapper.selectByPrimaryKey(mailSend.getSendId());
+            mailSend = mailSend2Mapper.selectById(mailSend.getSendId());
         }
        ListOperations<String, String> listOperations = redisTemplate.opsForList();
        Long priority = mailSend.getSendPriority();
        Long ret = 0L;
        Long size = 0L;
-        if (priority < 4L) {
+        if (priority.longValue() < 4) {
             //进入延迟队列
             ret = listOperations.rightPush(RedisPriorityQueue.DEFER_QUEUE.getCode(), FastJsonConvertUtil.convertObjectToJSON(mailSend));
             size = listOperations.size(RedisPriorityQueue.DEFER_QUEUE.getCode());
-        } else if (priority > 3L && priority < 7L) {
+        } else if (priority.longValue() > 3 && priority.longValue() < 7) {
             //进入普通队列
             ret = listOperations.rightPush(RedisPriorityQueue.NORMAL_QUEUE.getCode(), FastJsonConvertUtil.convertObjectToJSON(mailSend));
             size = listOperations.size(RedisPriorityQueue.NORMAL_QUEUE.getCode());
@@ -91,7 +91,7 @@ public class MailSendService {
         }
         //发送次数加1
         mailSend.setSendCount(mailSend.getSendCount() + 1);
-        if (ret == size) {
+        if (ret.equals(size)) {
             LOGGER.info("[邮件生产端]-进入队列成功，id:{}", mailSend.getSendId());
             mailSend.setSendStatus(MailStatus.SEND_IN.getCode());
             if (mailSend.getSendId().hashCode() % 2 == 0) {

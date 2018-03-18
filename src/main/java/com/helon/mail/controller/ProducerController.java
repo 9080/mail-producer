@@ -27,6 +27,12 @@ public class ProducerController {
     /**
      * @Author: Helon
      * @Description: 邮件发送
+     * {
+    "sendTo": "381614569@qq.com",
+    "sendUserId": "123",
+    "sendContent": "hello",
+    "sendPriority":"2"
+    }
      * @param mailSend
      * @Data: 2018/2/4 11:11
      * @Modified By:

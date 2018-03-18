@@ -1,7 +1,10 @@
 package com.helon.mail.producer;
 
 import com.github.pagehelper.PageHelper;
+import com.helon.mail.entity.MailSend;
 import com.helon.mail.entity.MstDict;
+import com.helon.mail.mapper.MailSend1Mapper;
+import com.helon.mail.mapper.MailSend2Mapper;
 import com.helon.mail.mapper.MstDictMapper;
 import com.helon.mail.service.MstDictService;
 import org.junit.Test;
@@ -26,6 +29,10 @@ public class MailProducerApplicationTests {
 	private MstDictMapper mstDictMapper;
 	@Autowired
 	private MstDictService mstDictService;
+	@Autowired
+	private MailSend1Mapper mailSend1Mapper;
+	@Autowired
+	private MailSend2Mapper mailSend2Mapper;
 
 	@Test
 	public void contextLoads() throws Exception{
@@ -44,6 +51,12 @@ public class MailProducerApplicationTests {
 		}
 	}
 
+	@Test
+	public void testMail() throws Exception{
+
+		MailSend mailSend = mailSend1Mapper.selectById("cebff4ae-29eb-11e8-aa5a-60eb69557725");
+//		System.out.println(mailSend.getSendId());
+	}
 
 	@Test
 	public void test2() throws Exception {
